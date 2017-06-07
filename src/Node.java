@@ -1,21 +1,15 @@
 
 public class Node<T> {
 
-    T value;
     int index;
     Node prev;
     Node next;
-
+    T value;
 
     Node(T value){
+        this.index = 0;
         this.value = value;
         this.prev = null;
-        this.next = null;
-    }
-
-    Node(T value, Node prev) {
-        this.value = value;
-        this.prev = prev;
         this.next = null;
     }
 
@@ -23,9 +17,7 @@ public class Node<T> {
         this.value = value;
         this.prev = prev;
         this.next = next;
-
     }
-
 
 
 }
