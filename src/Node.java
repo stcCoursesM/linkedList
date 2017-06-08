@@ -7,7 +7,6 @@ public class Node<T> {
     T value;
 
     Node(T value){
-        this.index = 0;
         this.value = value;
         this.prev = null;
         this.next = null;

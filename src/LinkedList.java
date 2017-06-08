@@ -11,20 +11,20 @@ public class LinkedList<T> {
 
     T getByIndex(int index){
         Node temp = this.head;
-        for (int i = 0; i < this.size; i++){
-            if (temp.next != null ){
-                if (temp.next.index == index){
-                    return (T) temp.next.value;
+        while (temp != null){
+                if (temp.index == index){
+                    return (T) temp.value;
                 }
                 temp = temp.next;
             }
-        }
-        return (T) temp.value;
+
+        return null;
     }
 
     void addLast(T value){
         if (head == null){
             head = new Node(value);
+            head.index = 0;
             tail = head;
         }
         else {
@@ -42,21 +42,28 @@ public class LinkedList<T> {
 
     }
 
-    void addToIndex(int index, T value){
-        Node temp = this.head;
-        for (int i = 0; i < this.size; i++){
-            if (temp.next != null ) {
+    void addToIndex(int index, T value) {
+        if (index<0) return;
+        if (head != null) {
+            Node temp = this.head;
+            while (temp != null) {
 
                 if (temp.next.index == index) {
-                    temp.next.value = value;
-                }
+                    Node nodeAdd = new Node(value);
+                    temp.next.prev = nodeAdd;
+                    nodeAdd.next = temp.next;
+                    nodeAdd.prev = temp;
+                    temp.next = nodeAdd;
 
-                if (temp.index > index) {
-                    temp.index += 1;
+
+                    temp = temp.next.next;
+                    while (temp != null) {
+                        temp.index += 1;
+                        temp = temp.next;
+                    }
                 }
-                temp = temp.next;
+                if (temp != null) temp = temp.next;
             }
-
         }
     }
 
@@ -93,33 +100,26 @@ public class LinkedList<T> {
     void removeByValue(T value){
 
         Node temp = this.head;
-        for (int i = 0; i < this.size; i++){
-            if (temp.next != null ){
-                if (temp.value == value){
-                    temp.prev.next = temp.next;
-                    temp.next.prev = temp.prev;
 
-                }
-                temp = temp.next;
+        while (temp != null ){
+            if (temp.value == value){
+                temp.prev.next = temp.next;
+                temp.next.prev = temp.prev;
+                return;
             }
+            temp = temp.next;
         }
-
     }
 
     boolean contains(T value){
 
         Node temp = this.head;
-
-        for (int i = 0; i < this.size; i++){
-            if (temp.next != null ){
+            while (temp != null ){
                 if (temp.value == value){
                     return true;
                 }
                 temp = temp.next;
             }
-        }
         return false;
-
     }
-
 }

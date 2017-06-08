@@ -13,16 +13,10 @@ public class Main {
         linko.removeByIndex(3);
         System.out.println(linko.contains(8));
         linko.printAll();
-        linko.addToIndex(3, 8);
-        System.out.println(linko.contains(8));
-
-        //System.out.println(linko.getByIndex(1));
-
+        System.out.println(linko.getByIndex(1));
         linko.printAll();
-
-        if (linko.head.next.index == 10) {
-            System.out.println(linko.tail.value);
-            System.out.println(linko.head.next.value);
-        }
+        linko.addToIndex(2, 8);
+        System.out.println("After add to index");
+        linko.printAll();
     }
 }
