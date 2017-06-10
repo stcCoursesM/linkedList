@@ -43,9 +43,19 @@ public class LinkedList<T> {
     }
 
     void addToIndex(int index, T value) {
-        if (index<0) return;
+        if (index < 0 || index >= size){
+            System.out.println("Index mustn't be less than 0!");
+            return;
+        }
+        Node temp = this.head;
+        if (index == 0){
+            head.prev = new Node(value);
+            head.prev.next = head;
+            head.prev = head;
+            size += 1;
+            return;
+        }
         if (head != null) {
-            Node temp = this.head;
             while (temp != null) {
 
                 if (temp.next.index == index) {
@@ -54,6 +64,7 @@ public class LinkedList<T> {
                     nodeAdd.next = temp.next;
                     nodeAdd.prev = temp;
                     temp.next = nodeAdd;
+                    size += 1;
 
 
                     temp = temp.next.next;
@@ -64,47 +75,77 @@ public class LinkedList<T> {
                 }
                 if (temp != null) temp = temp.next;
             }
+        }else {
+            addLast(value);
+            size += 1;
         }
     }
 
     void printAll(){
         Node temp = this.head;
-        for (int i = 0; i < this.size; i++){
+        while (temp != null) {
             System.out.println("["+temp.index+"]="+temp.value);
-            if(temp.next != null){
-                temp = temp.next;
-            }
-            else {
-                return;
-            }
+            temp = temp.next;
         }
     }
 
     void removeByIndex(int index){
+        if (index < 0){
+            System.out.println("Index mustn't be less than 0!");
+            return;
+        }
+        if (index > tail.index){
+            System.out.println("There is no such element with that index");
+            return;
+        }
+        if (index == 0){
+            head = head.next;
+            Node temp = head;
+            size -= 1;
+            while (temp != null) {
+                temp.index -=1;
+                temp = temp.next;
+            }
+            return;
+        }
+        if (index == tail.index){
+            tail = tail.prev;
+            size -= 1;
+            return;
+        }
         Node temp = this.head;
-        for (int i = 0; i < this.size; i++){
-            if (temp != null ){
+        while (temp != null) {
+
                 if (temp.index == index){
                     temp.prev.next = temp.next;
                     temp.next.prev = temp.prev;
+                    size -= 1;
+                    while (temp != null) {
+                        temp.index -=1;
+                        temp = temp.next;
+                    }
                 }
-                if (temp.index > index){
-                    temp.index -=1;
-                }
-                temp = temp.next;
+                if (temp != null) temp = temp.next;
             }
-        }
     }
 
 
     void removeByValue(T value){
-
+        if (size < 1){
+            System.out.println("There is no elements in the list");
+            return;
+        }
         Node temp = this.head;
 
         while (temp != null ){
             if (temp.value == value){
                 temp.prev.next = temp.next;
                 temp.next.prev = temp.prev;
+                size -=1;
+                while (temp != null) {
+                    temp.index -=1;
+                    temp = temp.next;
+                }
                 return;
             }
             temp = temp.next;
@@ -112,7 +153,9 @@ public class LinkedList<T> {
     }
 
     boolean contains(T value){
-
+        if (size < 1){
+            return false;
+        }
         Node temp = this.head;
             while (temp != null ){
                 if (temp.value == value){

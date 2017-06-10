@@ -3,19 +3,26 @@ public class Main {
 
     public static void main(String[] args) {
         LinkedList linko = new LinkedList();
-        linko.addLast(5);
-        linko.addLast(6);
-        linko.addLast("randomString");
-        linko.addLast(8);
-        linko.addLast(9);
+        linko.addLast("a");
+        linko.addLast("b");
+        linko.addLast("c");
+        linko.addLast("d");
+        linko.addLast("e");
         linko.printAll();
-        System.out.println(linko.contains(8));
+        System.out.println(linko.contains("a"));
+        linko.removeByIndex(0);
+        linko.printAll();
+        linko.removeByIndex(1);
+        linko.printAll();
         linko.removeByIndex(3);
-        System.out.println(linko.contains(8));
         linko.printAll();
-        System.out.println(linko.getByIndex(1));
+        System.out.println(linko.contains("a"));
         linko.printAll();
-        linko.addToIndex(2, 8);
+        System.out.println(linko.getByIndex(5));
+        System.out.println(linko.getByIndex(0));
+        linko.printAll();
+        linko.addToIndex(9, 8);
+        linko.addToIndex(0, "q");
         System.out.println("After add to index");
         linko.printAll();
     }
