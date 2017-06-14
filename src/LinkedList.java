@@ -2,8 +2,7 @@
 public class LinkedList<T> {
 
     int size;
-    Node head;
-    Node tail;
+    Node head, tail;
 
     boolean isEmpty(){
         return head == null;
@@ -23,9 +22,8 @@ public class LinkedList<T> {
 
     void addLast(T value){
         if (head == null){
-            head = new Node(value);
+            head = tail = new Node(value);
             head.index = 0;
-            tail = head;
         }
         else {
             tail.next = new Node(value, tail, null);
@@ -47,12 +45,18 @@ public class LinkedList<T> {
             System.out.println("Index mustn't be less than 0!");
             return;
         }
-        Node temp = this.head;
+        Node temp = head;
         if (index == 0){
-            head.prev = new Node(value);
-            head.prev.next = head;
-            head.prev = head;
+            head.prev = new Node(value, null, head);
+            head = head.prev;
             size += 1;
+
+            temp = head.next;
+            while (temp != null) {
+                temp.index += 1;
+                temp = temp.next;
+            }
+
             return;
         }
         if (head != null) {
@@ -65,7 +69,6 @@ public class LinkedList<T> {
                     nodeAdd.prev = temp;
                     temp.next = nodeAdd;
                     size += 1;
-
 
                     temp = temp.next.next;
                     while (temp != null) {
@@ -100,6 +103,7 @@ public class LinkedList<T> {
         }
         if (index == 0){
             head = head.next;
+            head.prev = null;
             Node temp = head;
             size -= 1;
             while (temp != null) {
